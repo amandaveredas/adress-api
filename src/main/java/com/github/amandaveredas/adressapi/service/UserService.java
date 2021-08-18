@@ -4,6 +4,7 @@ import com.github.amandaveredas.adressapi.entity.User;
 import com.github.amandaveredas.adressapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -16,10 +17,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    //FAZER TRATAMENTO DE EXCEÇÃO PARA PREENCHIMENTO DA DATA DE NASCIMENTO
+
     public void create(User user) {
+        //user.verificaData(user.getBirthDate());
         userRepository.save(user);
-    }
 }
+}
+
+
 
 
 

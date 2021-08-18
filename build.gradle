@@ -27,6 +27,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	'org.hibernate:hibernate-core:5.5.6.Final'
+	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.2.0.Final'
 }
 
 test {

@@ -1,13 +1,17 @@
 package com.github.amandaveredas.adressapi.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import java.time.LocalDate;
 
-
-//@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -18,63 +22,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nome", nullable = false)
-    private String nome;
+    @Column(name = "name", nullable = false)
+    @NotBlank(message = "{name.not.blank}")
+    private String name;
 
-    @Column(name = "email", unique = true,nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
+    @NotBlank(message = "{email.not.blank}")
+    @Email(message = "{email.email}")
     private String email;
 
     @Column(name = "cpf", unique = true, nullable = false)
+    @NotBlank(message = "{cpf.not.blank}")
+    @CPF(message = "{cpf.cpf}")
     private String cpf;
 
-    //ALTERAR PARA LOCALDATE, MAS QUERO TESTAR AS REQUISIÇÕES PRIMEIRO
     @Column(name = "data_nascimento")
-    private String dataNascimento;
+    @Past(message = "{birthDate.past}")
+    private LocalDate birthDate;
 
-    public User(String nome, String email, String cpf, String dataNascimento) {
-        this.nome = nome;
+
+    public User(String name, String email, String cpf, LocalDate birthDate) {
+        this.name = name;
         this.email = email;
         this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    private void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
+        this.birthDate = birthDate;
     }
 }
