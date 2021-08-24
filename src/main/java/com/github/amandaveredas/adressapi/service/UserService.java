@@ -34,15 +34,18 @@ public class UserService {
 
 
     public void delete(Integer id) throws UserNotFoundException {
-       userRepository.findById(id)
-               .orElseThrow(() -> new UserNotFoundException(id));
+        verifyIfExists(id);
 
-       userRepository.deleteById(id);
+        userRepository.deleteById(id);
+    }
+
+    private void verifyIfExists(Integer id) throws UserNotFoundException {
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public User updateById(Integer id, User user) throws UserNotFoundException {
-        userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+        verifyIfExists(id);
         userRepository.save(user);
         return user;
     }
