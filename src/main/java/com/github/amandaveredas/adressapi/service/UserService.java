@@ -1,6 +1,8 @@
 package com.github.amandaveredas.adressapi.service;
 
 import com.github.amandaveredas.adressapi.entity.User;
+import com.github.amandaveredas.adressapi.exception.EmptyListException;
+import com.github.amandaveredas.adressapi.exception.UserNotFoundException;
 import com.github.amandaveredas.adressapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,16 +15,24 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> getAll() {
+    public List<User> getAll() throws EmptyListException {
+        if (userRepository.findAll().isEmpty()){
+            throw new EmptyListException();
+        }
         return userRepository.findAll();
     }
 
-    //FAZER TRATAMENTO DE EXCEÇÃO PARA PREENCHIMENTO DA DATA DE NASCIMENTO
-
     public void create(User user) {
-        //user.verificaData(user.getBirthDate());
         userRepository.save(user);
 }
+
+    public User getById(Integer id) throws UserNotFoundException {
+        User user =  userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+
+        return user;
+    }
+
+
 }
 
 
