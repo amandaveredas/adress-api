@@ -20,7 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/list/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getById(@PathVariable Integer id) throws UserNotFoundException {
         User userFound = userService.getById(id);
         return new ResponseEntity<User>(userFound, HttpStatus.OK);
@@ -38,10 +38,12 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody @Valid User user){
-
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id) throws UserNotFoundException {
+        userService.delete(id);
     }
+
+
 
 
 

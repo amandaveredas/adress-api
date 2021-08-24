@@ -33,6 +33,12 @@ public class UserService {
     }
 
 
+    public void delete(Integer id) throws UserNotFoundException {
+       userRepository.findById(id)
+               .orElseThrow(() -> new UserNotFoundException(id));
+
+       userRepository.deleteById(id);
+    }
 }
 
 
