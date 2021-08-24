@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping(value = "/api/v1/users")
 public class UserController {
 
     @Autowired
@@ -39,8 +39,15 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Integer id) throws UserNotFoundException {
         userService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateById(@PathVariable Integer id, @RequestBody @Valid User user) throws UserNotFoundException {
+        userService.updateById(id, user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
 

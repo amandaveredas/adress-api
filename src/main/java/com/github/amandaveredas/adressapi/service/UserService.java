@@ -39,6 +39,13 @@ public class UserService {
 
        userRepository.deleteById(id);
     }
+
+    public User updateById(Integer id, User user) throws UserNotFoundException {
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        userRepository.save(user);
+        return user;
+    }
 }
 
 
